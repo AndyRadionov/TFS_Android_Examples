@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SavingStateNonConfiguration</string>
+    <string name="start_second_activity">Start Second Activity</string>
+</resources>
