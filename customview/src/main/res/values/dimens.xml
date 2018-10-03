@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="child_margin">6dp</dimen>
+    <dimen name="chip_radius">25dp</dimen>
+    <dimen name="chip_icon_size">12dp</dimen>
+</resources>
