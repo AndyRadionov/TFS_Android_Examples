@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/card_margin"
+    tools:ignore="RtlHardcoded">
+
+    <ImageView
+        android:id="@+id/iv_worker_photo"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/worker_photo"
+        tools:src="@drawable/ic_male_green" />
+
+    <TextView
+        android:id="@+id/tv_worker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/iv_worker_photo"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="John Smith" />
+
+    <TextView
+        android:id="@+id/tv_worker_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_worker_name"
+        android:layout_toRightOf="@id/iv_worker_photo"
+        android:textSize="16sp"
+        tools:text="Position: Manager" />
+
+    <TextView
+        android:id="@+id/tv_worker_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_worker_position"
+        android:layout_toRightOf="@id/iv_worker_photo"
+        tools:text="Age: 25" />
+
+</RelativeLayout>

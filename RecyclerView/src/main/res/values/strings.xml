@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RecyclerView</string>
+    <string name="empty_list_text">No workers found.\nAdd first one.</string>
+    <string name="worker_photo">Worker Photo</string>
+    <string name="position_label_text">Position: %s</string>
+    <string name="age_label_text">Age: %s</string>
+    <string name="new_list">New List</string>
+</resources>
