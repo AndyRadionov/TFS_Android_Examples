@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TFS4_Fragment</string>
+    <string name="no_documents">No Documents</string>
+    <string name="add_document">Add document</string>
+    <string name="remove_document">Remove Document</string>
+    <string name="document_number">Document № %s</string>
+</resources>

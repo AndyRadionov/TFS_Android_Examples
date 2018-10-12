@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RecyclerView</string>
+    <string name="app_name">TSF3_RecyclerView</string>
     <string name="empty_list_text">No workers found.\nAdd first one.</string>
     <string name="worker_photo">Worker Photo</string>
     <string name="position_label_text">Position: %s</string>

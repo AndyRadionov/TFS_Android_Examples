@@ -1,1 +1,1 @@
-include ':SavingStateNonConfiguration', ':CustomView', ':RecyclerView'
+include ':SavingStateNonConfiguration', ':CustomView', ':RecyclerView', ':Fragment'

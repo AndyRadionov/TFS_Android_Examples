@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_documents">Документов нет</string>
+    <string name="add_document">Добавить документ</string>
+    <string name="remove_document">Удалить документ</string>
+    <string name="document_number">Документ № %s</string>
+</resources>
