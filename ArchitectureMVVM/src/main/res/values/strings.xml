@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Курс криптовалют</string>
+    <string name="action_refresh">Обновить</string>
+    <string name="error_loading">Во время загрузки произошла ошибка</string>
+    <string name="percent_format">%.02f%%</string>
+    <string name="price_format">$ %s</string>
+    <string name="coin_logo_url" translatable="false">https://raw.githubusercontent.com/cjdowner/cryptocurrency-icons/master/128/color/%s.png</string>
+
+    <!-- DetailsActivity -->
+    <string name="price_label">Цена</string>
+    <string name="change_label">Изменение цены</string>
+    <string name="change_label_7d">7 дней</string>
+    <string name="change_label_24h">24 часа</string>
+    <string name="change_label_1h">1 час</string>
+    <string name="market_cap_label">Капитализация</string>
+    <string name="last_update_label">Последнее обновление</string>
+</resources>
