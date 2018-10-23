@@ -1,4 +1,4 @@
-package com.radionov.recyclerview.recycler;
+package com.radionov.recyclerview.ui.recycler;
 
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -11,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.radionov.recyclerview.R;
-import com.radionov.recyclerview.Worker;
+import com.radionov.recyclerview.data.entities.Worker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
@@ -26,10 +27,9 @@ import io.reactivex.schedulers.Schedulers;
 public class WorkersAdapter extends RecyclerView.Adapter<WorkersAdapter.WorkerViewHolder> {
 
     private final List<Worker> workers;
-    private Disposable diffDisposable;
 
-    public WorkersAdapter(@NonNull final List<Worker> workers) {
-        this.workers = workers;
+    public WorkersAdapter() {
+        this.workers = new ArrayList<>();
     }
 
     @NonNull
@@ -71,23 +71,10 @@ public class WorkersAdapter extends RecyclerView.Adapter<WorkersAdapter.WorkerVi
         notifyItemInserted(workers.size() - 1);
     }
 
-    public void updateWorkersList(List<Worker> newWorkers) {
-        if (diffDisposable != null && diffDisposable.isDisposed()) {
-            diffDisposable.dispose();
-        }
-
-        diffDisposable = Single
-                .fromCallable(() -> {
-                    WorkersDiffCallback diffCallback = new WorkersDiffCallback(workers, newWorkers);
-                    return DiffUtil.calculateDiff(diffCallback, false);
-                })
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(diffResult -> {
-                    workers.clear();
-                    workers.addAll(newWorkers);
-                    diffResult.dispatchUpdatesTo(this);
-                });
+    public void updateWorkersList(List<Worker> newWorkers, DiffUtil.DiffResult diffResult) {
+        workers.clear();
+        workers.addAll(newWorkers);
+        diffResult.dispatchUpdatesTo(this);
     }
 
     static class WorkerViewHolder extends RecyclerView.ViewHolder {

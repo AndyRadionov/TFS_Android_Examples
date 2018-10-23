@@ -1,4 +1,7 @@
-package com.radionov.recyclerview;
+package com.radionov.recyclerview.data.datasource;
+
+import com.radionov.recyclerview.R;
+import com.radionov.recyclerview.data.entities.Worker;
 
 import java.util.ArrayList;
 import java.util.Arrays;

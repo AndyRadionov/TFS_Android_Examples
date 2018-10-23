@@ -1,4 +1,4 @@
-package com.radionov.recyclerview;
+package com.radionov.recyclerview.data.entities;
 
 public class Worker {
     private int id;

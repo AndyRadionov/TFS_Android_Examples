@@ -1,8 +1,8 @@
-package com.radionov.recyclerview.recycler;
+package com.radionov.recyclerview.ui.recycler;
 
 import android.support.v7.util.DiffUtil;
 
-import com.radionov.recyclerview.Worker;
+import com.radionov.recyclerview.data.entities.Worker;
 
 import java.util.List;
 

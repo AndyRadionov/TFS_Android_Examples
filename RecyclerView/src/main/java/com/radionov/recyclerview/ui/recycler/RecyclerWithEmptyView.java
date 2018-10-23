@@ -1,4 +1,4 @@
-package com.radionov.recyclerview.recycler;
+package com.radionov.recyclerview.ui.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
