@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.transition.ChangeTransform
+import androidx.transition.TransitionManager
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,22 +26,30 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 0 until stations.size) {
             if (i % 2 == 0) {
-                addStationView(stations_container_1, stations[i].first, stations[i].second)
+                addStationView(stations_container_1, i)
             } else {
-                addStationView(stations_container_2, stations[i].first, stations[i].second)
+                addStationView(stations_container_2, i)
             }
         }
     }
 
     private fun swapContainer(container1: CustomViewGroup, container2: CustomViewGroup, view: View) {
+
+        val move = ChangeTransform()
+                .addTarget(view)
+                .setDuration(500)
+
+        TransitionManager.beginDelayedTransition(main_container, move)
+
         container1.removeView(view)
         container2.addView(view)
     }
 
-    private fun addStationView(container: CustomViewGroup, text: String, color: Int) {
+    private fun addStationView(container: CustomViewGroup, index: Int) {
         val stationView = layoutInflater.inflate(R.layout.child_view, container, false) as Chip
 
-        stationView.text = text
+        val color = stations[index].second
+        stationView.text = stations[index].first
         stationView.chipIconTint = ColorStateList.valueOf(color)
         stationView.closeIconTint = ColorStateList.valueOf(color)
         stationView.setTextColor(color)
