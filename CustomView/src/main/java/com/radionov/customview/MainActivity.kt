@@ -31,12 +31,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun swapContainer(container1: CustomViewGroupJava, container2: CustomViewGroupJava, view: View) {
+    private fun swapContainer(container1: CustomViewGroup, container2: CustomViewGroup, view: View) {
         container1.removeView(view)
         container2.addView(view)
     }
 
-    private fun addStationView(container: CustomViewGroupJava, text: String, color: Int) {
+    private fun addStationView(container: CustomViewGroup, text: String, color: Int) {
         val stationView = layoutInflater.inflate(R.layout.child_view, container, false) as Chip
 
         stationView.text = text
