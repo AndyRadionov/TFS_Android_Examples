@@ -9,61 +9,101 @@ import androidx.transition.ChangeTransform
 import androidx.transition.TransitionManager
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private val stationClickListener = View.OnClickListener { stationView ->
+    private val stationClickListener = View.OnClickListener { v ->
+        val stationView = v.parent as View
+        val name = stationView.tag as String
         if (stationView.parent == stations_container_1) {
+            swapList(firstStations, secondStations, name)
             swapContainer(stations_container_1, stations_container_2, stationView)
         } else {
+            swapList(secondStations, firstStations, name)
             swapContainer(stations_container_2, stations_container_1, stationView)
         }
     }
+
+    private lateinit var firstStations: ArrayList<String>
+    private lateinit var secondStations: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        for (i in 0 until stations.size) {
-            if (i % 2 == 0) {
-                addStationView(stations_container_1, i)
-            } else {
-                addStationView(stations_container_2, i)
+        initLists(savedInstanceState)
+        initContainers()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(EXTRA_FIRST_STATIONS, firstStations)
+        outState.putSerializable(EXTRA_SECOND_STATIONS, secondStations)
+    }
+
+    private fun initLists(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            firstStations = savedInstanceState
+                    .getSerializable(EXTRA_FIRST_STATIONS) as ArrayList<String>
+            secondStations = savedInstanceState
+                    .getSerializable(EXTRA_SECOND_STATIONS) as ArrayList<String>
+        } else {
+            firstStations = ArrayList()
+            secondStations = ArrayList()
+            for ((index, entry) in stations.entries.withIndex()) {
+                if (index % 2 == 0) {
+                    firstStations.add(entry.key)
+                } else {
+                    secondStations.add(entry.key)
+                }
             }
         }
     }
 
+    private fun initContainers() {
+        for (station in firstStations) {
+            stations_container_1.addView(getStationView(station, stations[station]!!))
+        }
+
+        for (station in secondStations) {
+            stations_container_2.addView(getStationView(station, stations[station]!!))
+        }
+    }
+
+    private fun swapList(firstList: ArrayList<String>, secondList: ArrayList<String>, name: String) {
+        firstList.remove(name)
+        secondList.add(name)
+    }
+
     private fun swapContainer(container1: CustomViewGroup, container2: CustomViewGroup, view: View) {
-
-        val move = ChangeTransform()
-                .addTarget(view)
-                .setDuration(500)
-
-        TransitionManager.beginDelayedTransition(main_container, move)
-
         container1.removeView(view)
         container2.addView(view)
     }
 
-    private fun addStationView(container: CustomViewGroup, index: Int) {
-        val stationView = layoutInflater.inflate(R.layout.child_view, container, false) as Chip
+    private fun getStationView(text: String, color: Int): View {
+        val stationView = layoutInflater.inflate(R.layout.child_view, null, false)
+        val stationChip = stationView.findViewById<Chip>(R.id.item_station)
 
-        val color = stations[index].second
-        stationView.text = stations[index].first
-        stationView.chipIconTint = ColorStateList.valueOf(color)
-        stationView.closeIconTint = ColorStateList.valueOf(color)
-        stationView.setTextColor(color)
+        stationChip.text = text
+        stationChip.chipIconTint = ColorStateList.valueOf(color)
+        stationChip.closeIconTint = ColorStateList.valueOf(color)
+        stationChip.setTextColor(color)
 
-        stationView.setOnClickListener(stationClickListener)
-        stationView.setOnCloseIconClickListener(stationClickListener)
+        stationChip.setOnClickListener(stationClickListener)
+        stationChip.setOnCloseIconClickListener(stationClickListener)
 
-        container.addView(stationView)
+        stationView.tag = text
+        return stationView
     }
 
     companion object {
+        const val EXTRA_FIRST_STATIONS = "first_stations"
+        const val EXTRA_SECOND_STATIONS = "second_stations"
+
         private val darkGreenColor = Color.parseColor("#FF388E3C")
         private val orangeColor = Color.parseColor("#FFFFA500")
-        private val stations = listOf (
+        private val stations = mapOf(
                 "Сокольники" to Color.RED,
                 "Фрунзенская" to Color.RED,
                 "Спортивная" to Color.RED,
