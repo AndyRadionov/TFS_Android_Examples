@@ -3,12 +3,12 @@ package com.radionov.customview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 /**
  * @author Andrey Radionov
  */
-public class CustomViewGroupJava extends ViewGroup {
+public class CustomViewGroupJava extends FrameLayout {
 
     public CustomViewGroupJava(Context context) {
         this(context, null, 0);
@@ -27,9 +27,15 @@ public class CustomViewGroupJava extends ViewGroup {
 
         final int containerRight = getMeasuredWidth() - getPaddingRight();
         final int containerWidth = containerRight - getPaddingLeft();
-        final int containerHeight = getMeasuredHeight() - getPaddingBottom() - getPaddingTop();
-
         final int childCount = getChildCount();
+
+        MarginLayoutParams layoutParams;
+        if (childCount > 0) {
+            layoutParams = (MarginLayoutParams) getChildAt(0).getLayoutParams();
+        } else {
+            layoutParams = (MarginLayoutParams) getLayoutParams();
+        }
+
         int rowTop = 0;
         int rowBottom = 0;
 
@@ -41,21 +47,24 @@ public class CustomViewGroupJava extends ViewGroup {
 
                 View child = getChildAt(rowEnd);
 
-                child.measure(MeasureSpec.makeMeasureSpec(containerWidth, MeasureSpec.AT_MOST),
-                        MeasureSpec.makeMeasureSpec(containerHeight, MeasureSpec.AT_MOST));
-
-                rowWidth += child.getMeasuredWidth();
+                rowWidth += child.getMeasuredWidth() +
+                        layoutParams.leftMargin + layoutParams.rightMargin;
                 if (rowWidth >= containerWidth) {
                     break;
                 }
             }
 
-            int childRight = containerRight;
+            int childRight = containerRight - layoutParams.rightMargin;
             for (int j = --rowEnd; j >= rowStart; j--) {
                 View child = getChildAt(j);
 
                 int childWidth = child.getMeasuredWidth();
                 int childHeight = child.getMeasuredHeight();
+
+                if (j < rowEnd) {
+                    childRight -= layoutParams.leftMargin + layoutParams.rightMargin;
+                }
+
                 rowBottom = rowTop + childHeight;
 
                 child.layout(childRight - childWidth, rowTop, childRight, rowBottom);
@@ -63,7 +72,7 @@ public class CustomViewGroupJava extends ViewGroup {
             }
 
             rowStart = rowEnd;
-            rowTop = rowBottom;
+            rowTop = rowBottom + layoutParams.topMargin + layoutParams.bottomMargin;
         }
     }
 
@@ -71,21 +80,31 @@ public class CustomViewGroupJava extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int containerWidth = getDefaultSize(0, widthMeasureSpec);
+        int childCount = getChildCount();
         int height = 0;
         int rowWidth = 0;
         int childState = 0;
 
+        MarginLayoutParams layoutParams;
+        if (childCount > 0) {
+            layoutParams = (MarginLayoutParams) getChildAt(0).getLayoutParams();
+        } else {
+            layoutParams = (MarginLayoutParams) getLayoutParams();
+        }
+
         for (int i = 0; i < getChildCount(); i++) {
             final View child = getChildAt(i);
-
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
-            rowWidth += child.getMeasuredWidth();
+
+            int childWidth = child.getMeasuredWidth() + layoutParams.leftMargin + layoutParams.rightMargin;
+            int childHeight = child.getMeasuredHeight() + layoutParams.topMargin + layoutParams.bottomMargin;
+            rowWidth += childWidth;
 
             if (rowWidth > containerWidth) {
-                height += child.getMeasuredHeight();
-                rowWidth = child.getMeasuredWidth();
+                height += childHeight;
+                rowWidth = childWidth;
             } else {
-                height = Math.max(height, child.getMeasuredHeight());
+                height = Math.max(height, childHeight);
             }
             childState = combineMeasuredStates(childState, child.getMeasuredState());
         }

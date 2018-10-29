@@ -10,8 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val stationClickListener = View.OnClickListener { v ->
-        val stationView = v.parent as View
+    private val stationClickListener = View.OnClickListener { stationView ->
         if (stationView.parent == stations_container_1) {
             swapContainer(stations_container_1, stations_container_2, stationView)
         } else {
@@ -24,33 +23,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         for (i in 0 until stations.size) {
-            val stationView = getStationView(stations[i].first, stations[i].second)
             if (i % 2 == 0) {
-                stations_container_1.addView(stationView)
+                addStationView(stations_container_1, stations[i].first, stations[i].second)
             } else {
-                stations_container_2.addView(stationView)
+                addStationView(stations_container_2, stations[i].first, stations[i].second)
             }
         }
     }
 
-    private fun swapContainer(container1: CustomViewGroup, container2: CustomViewGroup, view: View) {
+    private fun swapContainer(container1: CustomViewGroupJava, container2: CustomViewGroupJava, view: View) {
         container1.removeView(view)
         container2.addView(view)
     }
 
-    private fun getStationView(text: String, color: Int): View {
-        val stationView = layoutInflater.inflate(R.layout.child_view, null, false)
-        val stationChip = stationView.findViewById<Chip>(R.id.item_station)
+    private fun addStationView(container: CustomViewGroupJava, text: String, color: Int) {
+        val stationView = layoutInflater.inflate(R.layout.child_view, container, false) as Chip
 
-        stationChip.text = text
-        stationChip.chipIconTint = ColorStateList.valueOf(color)
-        stationChip.closeIconTint = ColorStateList.valueOf(color)
-        stationChip.setTextColor(color)
+        stationView.text = text
+        stationView.chipIconTint = ColorStateList.valueOf(color)
+        stationView.closeIconTint = ColorStateList.valueOf(color)
+        stationView.setTextColor(color)
 
-        stationChip.setOnClickListener(stationClickListener)
-        stationChip.setOnCloseIconClickListener(stationClickListener)
+        stationView.setOnClickListener(stationClickListener)
+        stationView.setOnCloseIconClickListener(stationClickListener)
 
-        return stationView
+        container.addView(stationView)
     }
 
     companion object {

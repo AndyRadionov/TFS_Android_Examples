@@ -3,12 +3,12 @@ package com.radionov.customview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
+import android.widget.FrameLayout
 
 /**
  * @author Andrey Radionov
  */
-class CustomViewGroup : ViewGroup {
+class CustomViewGroup : FrameLayout {
 
     constructor(context: Context) : this(context, null)
 
@@ -22,9 +22,14 @@ class CustomViewGroup : ViewGroup {
 
         val containerRight = measuredWidth - paddingRight
         val containerWidth = containerRight - paddingLeft
-        val containerHeight = measuredHeight - paddingBottom - paddingTop
 
-        var rowTop = 0
+        val layoutParams = if (childCount > 0) {
+            getChildAt(0).layoutParams as MarginLayoutParams
+        } else {
+            layoutParams as MarginLayoutParams
+        }
+
+        var rowTop = layoutParams.topMargin
         var rowBottom = 0
 
         var rowStart = 0
@@ -36,22 +41,24 @@ class CustomViewGroup : ViewGroup {
 
                 val child = getChildAt(rowEnd)
 
-                child.measure(View.MeasureSpec.makeMeasureSpec(containerWidth, View.MeasureSpec.AT_MOST),
-                        View.MeasureSpec.makeMeasureSpec(containerHeight, View.MeasureSpec.AT_MOST))
-
-                rowWidth += child.measuredWidth
+                rowWidth += child.measuredWidth + layoutParams.leftMargin + layoutParams.rightMargin
                 if (rowWidth >= containerWidth) {
                     break
                 }
                 rowEnd++
             }
 
-            var childRight = containerRight
+            var childRight = containerRight - layoutParams.rightMargin
             for (j in --rowEnd downTo rowStart) {
                 val child = getChildAt(j)
 
                 val childWidth = child.measuredWidth
                 val childHeight = child.measuredHeight
+
+                if (j < rowEnd) {
+                    childRight -= layoutParams.leftMargin + layoutParams.rightMargin
+                }
+
                 rowBottom = rowTop + childHeight
 
                 child.layout(childRight - childWidth, rowTop, childRight, rowBottom)
@@ -59,7 +66,7 @@ class CustomViewGroup : ViewGroup {
             }
 
             rowStart = ++rowEnd
-            rowTop = rowBottom
+            rowTop = rowBottom + layoutParams.topMargin + layoutParams.bottomMargin
         }
     }
 
@@ -70,13 +77,18 @@ class CustomViewGroup : ViewGroup {
         var rowWidth = 0
         var childState = 0
 
+        val layoutParams = if (childCount > 0) {
+            getChildAt(0).layoutParams as MarginLayoutParams
+        } else {
+            layoutParams as MarginLayoutParams
+        }
+
         for (i in 0 until childCount) {
             val child = getChildAt(i)
-
             measureChild(child, widthMeasureSpec, heightMeasureSpec)
 
-            val childWidth = child.measuredWidth
-            val childHeight = child.measuredHeight
+            val childWidth = child.measuredWidth + layoutParams.leftMargin + layoutParams.rightMargin
+            val childHeight = child.measuredHeight + layoutParams.topMargin + layoutParams.bottomMargin
             rowWidth += childWidth
 
             if (rowWidth > containerWidth) {
