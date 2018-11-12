@@ -77,6 +77,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun swapContainer(container1: CustomViewGroup, container2: CustomViewGroup, view: View) {
+        val move = ChangeTransform()
+                .addTarget(view)
+                .setDuration(500)
+
+        TransitionManager.beginDelayedTransition(main_container, move)
+
         container1.removeView(view)
         container2.addView(view)
     }
