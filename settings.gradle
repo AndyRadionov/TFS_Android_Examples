@@ -1,1 +1,1 @@
-include ':SavingStateNonConfiguration', ':CustomView', ':RecyclerView', ':Fragment', ':ArchitectureMVVM', ':AsyncHandlerLooper'
+include ':SavingStateNonConfiguration', ':CustomView', ':RecyclerView', ':Fragment', ':ArchitectureMVVM', ':AsyncHandlerLooper', ':RxKata'

@@ -1,0 +1,38 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation "io.reactivex.rxjava2:rxjava:2.1.4"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+    implementation "org.javatuples:javatuples:1.2"
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
+    testImplementation 'net.wuerl.kotlin:assertj-core-kotlin:0.2.1'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
