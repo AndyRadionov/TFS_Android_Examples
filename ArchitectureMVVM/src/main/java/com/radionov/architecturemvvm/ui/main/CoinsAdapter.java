@@ -50,10 +50,10 @@ public class CoinsAdapter extends RecyclerView.Adapter<CoinsAdapter.CoinsViewHol
 
     static class CoinsViewHolder extends RecyclerView.ViewHolder {
 
-        ItemCoinBinding binding;
-        OnItemClickListener listener;
+        private ItemCoinBinding binding;
+        private OnItemClickListener listener;
 
-        CoinsViewHolder(ItemCoinBinding binding, OnItemClickListener listener) {
+        private CoinsViewHolder(ItemCoinBinding binding, OnItemClickListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;
