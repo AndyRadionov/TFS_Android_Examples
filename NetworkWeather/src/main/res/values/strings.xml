@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Network</string>
+    <string name="app_name" translatable="false">Homework 9 Network</string>
+    <string name="perform_request">Perform request</string>
+    <string name="error_data_not_found">Weather not found</string>
+
+    <string name="wind_format">%.1f m/s</string>
+    <string name="today_format">Today, dd.MM.yyyy</string>
+    <string name="temp_format" translatable="false">%.1f℃</string>
+    <string name="forecast">Forecast</string>
+
+    <string-array name="city_array">
+        <item>Moscow,RU</item>
+        <item>Sochi,RU</item>
+        <item>Vladivostok,RU</item>
+        <item>Chelyabinsk,RU</item>
+    </string-array>
 </resources>

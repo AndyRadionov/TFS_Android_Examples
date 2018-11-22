@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_weather_size">40dp</dimen>
+    <dimen name="weather_card_side_padding">8dp</dimen>
+    <dimen name="weather_card_top_padding">4dp</dimen>
+    <dimen name="weather_date_text">20sp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="wind_icon">16dp</dimen>
+    <dimen name="tem_size">40sp</dimen>
+    <dimen name="small_text">12sp</dimen>
+    <dimen name="big_text">16sp</dimen>
+</resources>

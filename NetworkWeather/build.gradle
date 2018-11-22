@@ -2,20 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-
-
-
     defaultConfig {
-        applicationId "com.radionov.network"
-        minSdkVersion 21
+        applicationId "ru.tinkoff.ru.seminar"
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        buildConfigField 'String', "ApiKey", weather_api_key
+        buildConfigField 'String', "ApiUrl", weather_api_url
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -23,13 +19,50 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:cardview-v7:28.0.0"
+    implementation "com.android.support:recyclerview-v7:28.0.0"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    //Lifecycle
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    //DI Dagger
+    implementation "com.google.dagger:dagger:2.17"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.17"
+
+    //RX
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //OkHttpClient
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    //Logging
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+    //Stetho
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

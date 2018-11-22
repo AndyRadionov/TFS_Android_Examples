@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perform_request">Выполнить запрос</string>
+    <string name="error_data_not_found">Информация не найдена</string>
+
+    <string name="wind_format">%.1f м/c</string>
+    <string name="today_format">Сегодня, dd.MM.yyyy</string>
+    <string name="forecast">Прогноз</string>
+</resources>

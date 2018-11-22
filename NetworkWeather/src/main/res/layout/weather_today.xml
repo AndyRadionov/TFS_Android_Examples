@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/weather_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/card_bg"
+    android:visibility="invisible">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="@dimen/weather_card_side_padding"
+        android:paddingTop="@dimen/weather_card_top_padding"
+        android:paddingRight="@dimen/weather_card_top_padding"
+        android:paddingBottom="@dimen/weather_card_side_padding">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="@dimen/weather_date_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Сегодня, 22.10.2018" />
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="@dimen/icon_weather_size"
+            android:layout_height="@dimen/icon_weather_size"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date"
+            tools:src="@drawable/wind" />
+
+        <TextView
+            android:id="@+id/weather_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintBottom_toBottomOf="@id/weather_icon"
+            app:layout_constraintLeft_toRightOf="@id/weather_icon"
+            app:layout_constraintTop_toTopOf="@id/weather_icon"
+            tools:text="Пасмурно" />
+
+        <ImageView
+            android:id="@+id/wind_icon"
+            android:layout_width="@dimen/wind_icon"
+            android:layout_height="@dimen/wind_icon"
+            android:src="@drawable/wind"
+            app:layout_constraintLeft_toLeftOf="@id/weather_icon"
+            app:layout_constraintRight_toRightOf="@id/weather_icon"
+            app:layout_constraintTop_toBottomOf="@id/weather_icon" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            app:layout_constraintBottom_toBottomOf="@id/wind_icon"
+            app:layout_constraintLeft_toRightOf="@id/wind_icon"
+            app:layout_constraintTop_toTopOf="@id/wind_icon"
+            tools:text="6м/с" />
+
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/tem_size"
+            app:layout_constraintBottom_toBottomOf="@id/wind_icon"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/weather_icon"
+            tools:text="19C" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/forecast_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/forecast"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wind_icon" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/forecast_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_label" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
