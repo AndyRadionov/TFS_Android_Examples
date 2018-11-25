@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">storage</string>
+    <string name="action_mode">Удалить/Добавить</string>
 </resources>

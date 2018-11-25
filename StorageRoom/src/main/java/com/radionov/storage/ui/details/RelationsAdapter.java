@@ -27,8 +27,7 @@ public class RelationsAdapter extends BaseNodeAdapter {
     private RelationType currentType;
 
     public interface OnItemClickListener {
-        void onAdd(long id);
-        void onRemove(long id);
+        void onClick(long id, ActionType actionType);
     }
 
     public RelationsAdapter(OnItemClickListener clickListener, long nodeId) {
@@ -92,9 +91,9 @@ public class RelationsAdapter extends BaseNodeAdapter {
             NodeWithRelations node = getData().get(getAdapterPosition());
             long id = node.getNode().getId();
             if (isChild(node) || isParent(node)) {
-                clickListener.onRemove(id);
+                clickListener.onClick(id, ActionType.REMOVE);
             } else {
-                clickListener.onAdd(id);
+                clickListener.onClick(id, ActionType.ADD);
             }
         }
     }

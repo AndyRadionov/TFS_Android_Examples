@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import com.radionov.storage.data.entities.NodeWithRelations;
 import com.radionov.storage.data.repositories.NodeRepository;
 import com.radionov.storage.ui.common.RelationType;
+import com.radionov.storage.ui.details.ActionType;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class DetailsViewModel extends ViewModel {
 
     private NodeRepository nodeRepository;
     private RelationType currentType = RelationType.CHILD;
+    private long currentNodeId;
+    private long relationNodeId;
+    private ActionType actionType;
 
     public DetailsViewModel(NodeRepository repository) {
         nodeRepository = repository;
@@ -46,6 +50,20 @@ public class DetailsViewModel extends ViewModel {
             nodeRepository.removeChild(relationId, nodeId);
         } else {
             nodeRepository.removeChild(nodeId, relationId);
+        }
+    }
+
+    public void setAction(long currentNodeId, long id, ActionType actionType) {
+        this.currentNodeId = currentNodeId;
+        this.relationNodeId = id;
+        this.actionType = actionType;
+    }
+
+    public void performAction() {
+        if (actionType == ActionType.ADD) {
+            addRelation(currentNodeId, relationNodeId);
+        } else {
+            removeRelation(currentNodeId, relationNodeId);
         }
     }
 }

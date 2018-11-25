@@ -3,8 +3,11 @@ package com.radionov.storage.ui.details;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.radionov.storage.R;
 import com.radionov.storage.ui.common.BaseActivity;
@@ -17,20 +20,23 @@ public class DetailsActivity extends BaseActivity {
 
     private DetailsViewModel detailsViewModel;
     private RelationsAdapter relationsAdapter;
+    private ActionMode actionMode;
     private long currentNodeId;
 
+    private ActionMode.Callback callback = initActionCallback();
     private RelationsAdapter.OnItemClickListener clickListener = new RelationsAdapter.OnItemClickListener() {
 
         @Override
-        public void onAdd(long id) {
-            detailsViewModel.addRelation(currentNodeId, id);
-        }
+        public void onClick(long id, ActionType actionType) {
+            if (actionMode == null)
+                actionMode = startSupportActionMode(callback);
+            else
+                actionMode.finish();
 
-        @Override
-        public void onRemove(long id) {
-            detailsViewModel.removeRelation(currentNodeId, id);
+            detailsViewModel.setAction(currentNodeId, id, actionType);
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,5 +93,29 @@ public class DetailsActivity extends BaseActivity {
                         relationsAdapter.updateData(nodes);
                     }
                 });
+    }
+
+    private ActionMode.Callback initActionCallback() {
+        return new ActionMode.Callback() {
+
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenu().add(R.string.action_mode);
+                return true;
+            }
+
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                detailsViewModel.performAction();
+                actionMode.finish();
+                return true;
+            }
+
+            public void onDestroyActionMode(ActionMode mode) {
+                actionMode = null;
+            }
+        };
     }
 }
